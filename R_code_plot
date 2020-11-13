@@ -1,0 +1,39 @@
+#Lets plot the relationship among ecological variables
+
+
+#install.packages is installed 
+install.packages("sp")
+
+library(sp)
+#no use of "because sp in already now in R
+data(meuse)
+#look inside the chat!
+meuse
+
+
+
+#how to view
+view(meuse)
+
+head(meuse)
+#mean of all of the variables
+#cadmium crazy mean extraction
+#(11,7+8,6+6,5,...)/N
+summary(meuse)
+#exercise plot zinc (y) against cadmium (x)
+
+ #$
+ 
+ plot(meuse$cadmium, meuse$zinc)
+ #use attach function unstead of dollar
+ attach(meuse)
+
+ plot(cadmium, zinc)
+plot(cadmium, lead)
+
+#trivial or
+#you can use scatterplot matrices
+pairs(meuse)
+
+
+ 
