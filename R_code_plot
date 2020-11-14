@@ -38,6 +38,7 @@ pairs(meuse)
 
 
 
+
 #second part
 #recall sp package ,dataset meuse
 library(sp)
@@ -53,6 +54,27 @@ head(meuse)
 #x,y,cooper,lead,zinc
 #from 3 to sixth column
 pairs(meuse[,3:6])
+
+# let's use the names of the columns:
+pairs(~ cadmium + copper + lead + zinc, data=meuse) 
+# tilde is going to be done by AltGr + ^
+
+# let's prettify the graph
+# Exercise: just use cadmium, lead and zince
+pairs(~ cadmium + lead + zinc, data=meuse)
+
+# Exercise: change the color
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red") 
+
+# for the future change colours of single panels by the par() function 
+
+# Exercise: change the symbol to filled triangles: pch
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red", pch=17) 
+
+
+# Exercise: increase the size of the triangles
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red", pch=17, cex=3)
+
 
 
 
