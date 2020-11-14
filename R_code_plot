@@ -36,4 +36,24 @@ plot(cadmium, lead)
 pairs(meuse)
 
 
+
+
+#second part
+#recall sp package ,dataset meuse
+library(sp)
+data(meuse)
+
+pairs(meuse)
+
+head(meuse)
+
+#4 variable
+#pairs with soil variables
+
+#x,y,cooper,lead,zinc
+#from 3 to sixth column
+pairs(meuse[,3:6])
+
+
+
  
