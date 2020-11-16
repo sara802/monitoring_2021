@@ -30,3 +30,29 @@ bubble(meuse, "zinc")
 # do the same for lead
 bubble(meuse, "lead")
 bubble(meuse, "lead", col="red")
+
+#ggplot2 package was downloaded
+> library(ggplot2)
+> biofuels <- c (120,200,350,570,750)
+> biofuels
+[1] 120 200 350 570 750
+> oxidative <- c (1200,1300,21000,34000,50000)
+> oxidative
+[1]  1200  1300 21000 34000 50000
+> d<- data.frame(biofuels,oxidative)
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point()
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point(size=5, col= "red")
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_line()
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point(size=5, col= "red")+geom_line()
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_polygon()
+> save.image("C:\\lab\\.RData")
+
+#import data
+#setwd("C:/lab/")
+
+covid <- read.table("covid_agg.csv" , header= TRUE)
+
+
+
+import data
+
