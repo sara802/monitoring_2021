@@ -19,15 +19,17 @@ setwd("C:/lab/")
 #attach function 
 > attach(covid)
 
-#planar
+# let's make a planar point pattern in spatstat
+##x,y ranges to covid planar
+#usually longitude is x,lat is y
 > covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
-
 # cases, cat, country, lat, lon
 
-##### if you do not use attach(covid):use the dollar sign
-##### covids <- ppp(covid$lon, covid$lat, c(-180,180), c(-90,90))
-#####unstead of>attach(covid) and  covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
+#* if you do not use attach(covid):use the dollar sign
+#* covids <- ppp(covid$lon, covid$lat, c(-180,180), c(-90,90))
+#*unstead of>attach(covid) and  covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
 
+# Now, let's see the density of the covid data!
 #density map
 > density_map <- density(covid_planar)
 
@@ -44,6 +46,9 @@ setwd("C:/lab/")
 #taking into account the color function 
 > plot(density_map, col = cl)
 
+
+# let's make a planar point pattern in spatstat
+
 #view the points of the planar
 > points(covid_planar)
 
@@ -51,5 +56,119 @@ setwd("C:/lab/")
 #geospatial data library
 #open source software ,rgdal is the r version of this library#to make use of polygon data for expl
 
+# Exercise: change the colour of the map
+cl <- colorRampPalette(c('blue','yellow','orange','red','magenta'))(100) #
+plot(density_map, col = cl)
+points(covid_planar)
+
+
+# Putting the coutnries ontop of the map
+
 #first install the package 
 install.packages("rgdal")
+Installing package into ‘C:/Users/User/Documents/R/win-library/4.0’
+(as ‘lib’ is unspecified)
+trying URL 'https://cloud.r-project.org/bin/windows/contrib/4.0/rgdal_1.5-18.zip'
+Content type 'application/zip' length 38831001 bytes (37.0 MB)
+downloaded 37.0 MB
+
+package ‘rgdal’ successfully unpacked and MD5 sums checked
+
+library(rgdal)
+oading required package: sp
+rgdal: version: 1.5-18, (SVN revision 1082)
+Geospatial Data Abstraction Library extensions to R successfully loaded
+Loaded GDAL runtime: GDAL 3.0.4, released 2020/01/28
+Path to GDAL shared files: C:/Users/User/Documents/R/win-library/4.0/rgdal/gdal
+GDAL binary built with GEOS: TRUE 
+Loaded PROJ runtime: Rel. 6.3.1, February 10th, 2020, [PJ_VERSION: 631]
+Path to PROJ shared files: C:/Users/User/Documents/R/win-library/4.0/rgdal/proj
+Linking to sp version:1.4-4
+To mute warnings of possible GDAL/OSR exportToProj4() degradation,
+use options("rgdal_show_exportToProj4_warnings"="none") before loading rgdal.
+
+
+
+coastlines <- readOGR("ne_10m_coastline.shp")
+
+OGR data source with driver: ESRI Shapefile 
+Source: "C:\lab\ne_10m_coastline.shp", layer: "ne_10m_coastline"
+with 4133 features
+It has 3 fields
+Integer64 fields read as strings:  scalerank 
+
+
+
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) 
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+
+png("figure1.png")
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) #
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+dev.off()
+#png
+windows 
+      2 
+
+
+pdf("figure1.pdf")
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) #
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+dev.off()
+
+
+#pdf
+
+###### interpolate case data
+marks(covid_planar) <- cases
+cases_map <- Smooth(covid_planar)
+## Warning message:
+Least Squares Cross-Validation criterion was minimised at right-hand end of interval [0.323, 27.7]; use arguments ‘hmin’, ‘hmax’ to specify a wider interval for bandwidth ‘sigma’ 
+
+[0.323, 27.7]; use arguments ’hmin’, ’hmax’ to specify a wider interval for bandwidth ’sigma’
+plot(cases_map, col = cl)
+points(covid_planar)
+plot(coastlines, add = T)
+
+#####
+install.packages("sf")
+#package ‘e1071’ successfully unpacked and MD5 sums checked
+package ‘classInt’ successfully unpacked and MD5 sums checked
+package ‘DBI’ successfully unpacked and MD5 sums checked
+package ‘units’ successfully unpacked and MD5 sums checked
+package ‘sf’ successfully unpacked and MD5 sums checked
+
+
+#The downloaded binary packages are in
+        C:\Users\User\AppData\Local\Temp\RtmpeyPw0D\downloaded_packages
+
+library(sf)
+## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Spoints <- st_as_sf(covid, coords = c("lon", "lat"))
+cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+plot(cases_map, col = cl)
+^^^^^
+plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T)
+## Warning in plot.sf(Spoints, cex = Spoints$cases/10000, col = "purple3", : ignoring all
+but the first attribute
+8
+
+library(rgdal)
+# put a smoother to the coastlines by resampling
+coastlines <- readOGR("ne_10m_coastline.shp")
+#OGR data source with driver: ESRI Shapefile 
+Source: "C:\lab\ne_10m_coastline.shp", layer: "ne_10m_coastline"
+with 4133 features
+It has 3 fields
+Integer64 fields read as strings:  scalerank 
+
+#thinga to remember when plot(coastlines, add=T)when adding colors in pallette use '...
+plot(coastlines, add=T)
+cases_map
+
