@@ -33,6 +33,10 @@ setwd("C:/lab/")
 #density map
 > density_map <- density(covid_planar)
 
+
+
+
+
 #plot that map
 > plot(density_map)
 
@@ -171,4 +175,66 @@ Integer64 fields read as strings:  scalerank
 #thinga to remember when plot(coastlines, add=T)when adding colors in pallette use '...
 plot(coastlines, add=T)
 cases_map
+
+
+
+*import leo data
+setwd(":C/"lab/")
+
+leo<- read.table("dati.zambotti.csv", header=T,sep=",")
+> leo<- read.table("dati_zabotti.csv", header=T,sep=",")
+> attach(leo)
+> library(spatstat)
+> 
+> summary(leo)
+       x                 y                 t              chlh        
+ Min.   :2301708   Min.   :5009151   Min.   :16.30   Min.   : 0.7606  
+ 1st Qu.:2303334   1st Qu.:5014845   1st Qu.:18.40   1st Qu.: 1.1382  
+ Median :2309660   Median :5029621   Median :20.21   Median : 1.3955  
+ Mean   :2310653   Mean   :5028168   Mean   :19.65   Mean   : 2.6112  
+ 3rd Qu.:2316626   3rd Qu.:5039009   3rd Qu.:20.76   3rd Qu.: 2.6832  
+ Max.   :2323785   Max.   :5044207   Max.   :21.38   Max.   :13.1886  
+      chls        
+ Min.   : 0.5698  
+ 1st Qu.: 2.7766  
+ Median : 5.4110  
+ Mean   : 6.4341  
+ 3rd Qu.:10.1281  
+ Max.   :15.3955  
+
+> leo<- read.table("dati_zabotti.csv", header=T,sep=",")
+> attach(leo)
+> library(spatstat)
+> 
+> summary(leo)
+       x                 y                 t              chlh        
+ Min.   :2301708   Min.   :5009151   Min.   :16.30   Min.   : 0.7606  
+ 1st Qu.:2303334   1st Qu.:5014845   1st Qu.:18.40   1st Qu.: 1.1382  
+ Median :2309660   Median :5029621   Median :20.21   Median : 1.3955  
+ Mean   :2310653   Mean   :5028168   Mean   :19.65   Mean   : 2.6112  
+ 3rd Qu.:2316626   3rd Qu.:5039009   3rd Qu.:20.76   3rd Qu.: 2.6832  
+ Max.   :2323785   Max.   :5044207   Max.   :21.38   Max.   :13.1886  
+      chls        
+ Min.   : 0.5698  
+ 1st Qu.: 2.7766  
+ Median : 5.4110  
+ Mean   : 6.4341  
+ 3rd Qu.:10.1281  
+ Max.   :15.3955  
+
+
+
+leo_ppp <- ppp(x, y, c(2300000,2325000), c(5005000,5045000))
+
+density_map <- density(leo_ppp)
+> plot(density_map)
+> points(leo_ppp)
+
+
+#saveworkspace
+save.image("C:\\lab\\pointpattern")
+
+
+
+
 
