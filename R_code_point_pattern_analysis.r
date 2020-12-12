@@ -226,6 +226,8 @@ leo<- read.table("dati.zambotti.csv", header=T,sep=",")
 
 leo_ppp <- ppp(x, y, c(2300000,2325000), c(5005000,5045000))
 
+plot(leo_ppp)
+
 density_map <- density(leo_ppp)
 > plot(density_map)
 > points(leo_ppp)
@@ -234,6 +236,84 @@ density_map <- density(leo_ppp)
 #saveworkspace
 save.image("C:\\lab\\pointpattern")
 
+
+interpolative data
+setwd("C:/lab/")
+load("point_pattern_analysis.RData")
+
+#list all files that we have produces
+ls()
+[1] "density_map" "leo"         "leo_ppp" 
+
+#head function(leo)
+head(leo)
+        x       y        t       chlh       chls
+1 2302884 5027260 20.34755  1.3110573  7.1082322
+2 2302119 5031983 20.09945  2.3351714  8.8433274
+3 2310209 5026764 20.25418  0.8779825  3.8966652
+4 2303490 5023558 20.16274  1.2805183  3.1654455
+5 2311296 5026117 20.87947  0.7605694  0.5697923
+6 2309111 5040020 20.60006 13.1885874 15.3955188
+
+#recall library
+library(spatstat)
+
+#attach dataset function
+attach(leo)
+
+#marks function to put data of chlorophyll in water(chlh)
+marks(leo_ppp) <- chlh
+
+#smooth function leo ppp based on marks of chlorophyll in water(chlh)..aim to create the (map)
+chlh_map <- Smooth(leo_ppp)
+
+cl <- colorRampPalette(c('yellow','orange','red','green'))(100)  
+#plot map
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+# Exercise: do the same for chlorophyll in the sediment(chls)
+marks(leo_ppp) <- chls
+
+#smooth funtion based on the marks to create the desired map in this case for the sediment
+chls_map <- Smooth(leo_ppp)
+
+#plot the map
+cl <- colorRampPalette(c('yellow','orange','red','green'))(100) 
+plot(chls_map, col=cl)
+points(leo_ppp)
+
+# multipanel function called par...set parameters and multiframeROWto put several elements together(c),plot diff graps together,1st plot density,second chlh,3rd chls
+par(mfrow=c(1,3))
+
+# first graph: density map.....we put the plot in the first column
+plot(density_map, col=cl)
+points(leo_ppp)
+
+# second graph
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+# third graph
+plot(chls_map, col=cl)
+points(leo_ppp)
+
+# Exercise: build a multipanel with 3 rows and 1 column
+# multipanel
+par(mfrow=c(3,1))
+
+# first graph: density map
+plot(density_map, col=cl)
+points(leo_ppp)
+
+# second graph
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+# third graph
+plot(chls_map, col=cl)
+points(leo_ppp)
+marks
 
 
 
