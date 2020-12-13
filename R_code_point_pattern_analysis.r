@@ -193,9 +193,9 @@ cases_map
 
 
 *import leo data
-setwd(":C/"lab/")
+#set working directory to disk name then signs lab closed all with quotes
+setwd(":C/lab/")
 
-leo<- read.table("dati.zambotti.csv", header=T,sep=",")
 > leo<- read.table("dati_zabotti.csv", header=T,sep=",")
 > attach(leo)
 > library(spatstat)
