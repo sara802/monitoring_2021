@@ -5,7 +5,7 @@
 #when calling library no need for " as its there
 library(spatstat)
 
-#set the working directory,using disk name:/lab/
+#set the working directory,using disk name:/lab/,dont forget quotations
 setwd("C:/lab/")
 
 # import data
@@ -20,7 +20,7 @@ setwd("C:/lab/")
 > attach(covid)
 
 # let's make a planar point pattern in spatstat
-##x,y ranges to covid planar
+##assign points of x,y ranges to covid planar
 #usually longitude is x,lat is y
 > covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
 # cases, cat, country, lat, lon
@@ -66,7 +66,7 @@ plot(density_map, col = cl)
 points(covid_planar)
 
 
-# Putting the coutnries ontop of the map
+# Putting the countries ontop of the map
 
 #first install the package 
 install.packages("rgdal")
@@ -77,6 +77,8 @@ Content type 'application/zip' length 38831001 bytes (37.0 MB)
 downloaded 37.0 MB
 
 package ‘rgdal’ successfully unpacked and MD5 sums checked
+
+#call library
 
 library(rgdal)
 oading required package: sp
@@ -92,7 +94,7 @@ To mute warnings of possible GDAL/OSR exportToProj4() degradation,
 use options("rgdal_show_exportToProj4_warnings"="none") before loading rgdal.
 
 
-
+#import data....readogr of file assign to coastlines
 coastlines <- readOGR("ne_10m_coastline.shp")
 
 OGR data source with driver: ESRI Shapefile 
@@ -102,15 +104,20 @@ It has 3 fields
 Integer64 fields read as strings:  scalerank 
 
 
+#put colors using palette assigned to color function 
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100)
 
-cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) 
+#plot the density map with color function
 plot(density_map, col = cl)
+#view points
 points(covid_planar, pch = 19, cex = 0.5)
+#plot coastlines adding it is true 
 plot(coastlines, add = TRUE)
 
 png("figure1.png")
 cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) #
 plot(density_map, col = cl)
+#view points,pch is to fill,cex is size of points
 points(covid_planar, pch = 19, cex = 0.5)
 plot(coastlines, add = TRUE)
 dev.off()
@@ -130,14 +137,19 @@ dev.off()
 #pdf
 
 ###### interpolate case data
+#assign the cases to store in  the marks of the dataset
 marks(covid_planar) <- cases
+#smooth function of dataset assign to create a map of the cases
 cases_map <- Smooth(covid_planar)
 ## Warning message:
 Least Squares Cross-Validation criterion was minimised at right-hand end of interval [0.323, 27.7]; use arguments ‘hmin’, ‘hmax’ to specify a wider interval for bandwidth ‘sigma’ 
 
 [0.323, 27.7]; use arguments ’hmin’, ’hmax’ to specify a wider interval for bandwidth ’sigma’
+#plot the created map with color
 plot(cases_map, col = cl)
+#view th points of dataset
 points(covid_planar)
+#plot coastlines adding that it is true
 plot(coastlines, add = T)
 
 #####
@@ -151,6 +163,8 @@ package ‘sf’ successfully unpacked and MD5 sums checked
 
 #The downloaded binary packages are in
         C:\Users\User\AppData\Local\Temp\RtmpeyPw0D\downloaded_packages
+
+#call the library,no need for quotes
 
 library(sf)
 ## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
