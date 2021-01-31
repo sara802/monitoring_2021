@@ -4,6 +4,7 @@ library(sp)
 #call library no quotes
 
 data(meuse)
+#remember to recall datasets!use data
 
 head(meuse)
 
