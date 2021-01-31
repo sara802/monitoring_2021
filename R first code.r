@@ -17,6 +17,7 @@ plot(primates,crabs,col="red",pch=19, cex=2)
 plot(primates,crabs,col="red",pch=19, cex=6)
 
 plot(primates,crabs,col="red",pch=19, cex=6,main="my first ecological graph in R!")
+#main added as to make a title name 
 
 #create 
 ecoset <- data.frame(primates,crabs)
