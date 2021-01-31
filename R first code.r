@@ -23,4 +23,5 @@ ecoset <- data.frame(primates,crabs)
 ecoset
 #(3+5+9+15+40)/5
 #summary of the dataframe
+summary(ecoset)
 
