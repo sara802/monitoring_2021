@@ -16,43 +16,42 @@ setwd("C:/lab/")
 #covid
 > covid
 
-#attach function 
-> attach(covid)
-
 # let's make a planar point pattern in spatstat
-##assign points of x,y ranges to covid planar
-#usually longitude is x,lat is y
-> covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
+#FIRST ATTACH data
+
+> attach(covid)
 # cases, cat, country, lat, lon
+
+#BEFORE x,y,RANGES ATTACH dataset
+
+##assign points of x,y ranges to covid planar
+#usually longitude is x,lat is y...and c to see both ranges
+> covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
+
 
 #* if you do not use attach(covid):use the dollar sign
 #* covids <- ppp(covid$lon, covid$lat, c(-180,180), c(-90,90))
 #*unstead of>attach(covid) and  covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
 
 # Now, let's see the density of the covid data!
+
 #density map
 > density_map <- density(covid_planar)
-
-
-
-
-
 #plot that map
 > plot(density_map)
 
-#introduce color(s)
+#introduce color OR COLORS WITH c
 #the specified desired colors in the color function
+#each color in quotes and end brackets with (100)
 
+#assign to cl
 > cl <- colorRampPalette(c('yellow','orange','red'))(100) 
-> cl <- colorRampPalette(c('yellow','orange','red'))(100)
 
 #plot the map 
 #taking into account the color function 
 > plot(density_map, col = cl)
 
-
 # let's make a planar point pattern in spatstat
-
 #view the points of the planar
 > points(covid_planar)
 
@@ -66,7 +65,8 @@ plot(density_map, col = cl)
 points(covid_planar)
 
 
-# Putting the countries ontop of the map
+#COUNTRIES
+#Putting the countries ontop of the map
 
 #first install the package 
 install.packages("rgdal")
@@ -78,7 +78,7 @@ downloaded 37.0 MB
 
 package ‘rgdal’ successfully unpacked and MD5 sums checked
 
-#call library
+#CALL LIBRARY RGDAL
 
 library(rgdal)
 oading required package: sp
@@ -104,7 +104,7 @@ It has 3 fields
 Integer64 fields read as strings:  scalerank 
 
 
-#put colors using palette assigned to color function 
+#put colors using palette assigned to cl
 cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100)
 
 #plot the density map with color function
@@ -114,6 +114,7 @@ points(covid_planar, pch = 19, cex = 0.5)
 #plot coastlines adding it is true 
 plot(coastlines, add = TRUE)
 
+#png
 png("figure1.png")
 cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) #
 plot(density_map, col = cl)
@@ -121,20 +122,17 @@ plot(density_map, col = cl)
 points(covid_planar, pch = 19, cex = 0.5)
 plot(coastlines, add = TRUE)
 dev.off()
-#png
+
 windows 
       2 
 
-
+#pdf
 pdf("figure1.pdf")
 cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) #
 plot(density_map, col = cl)
 points(covid_planar, pch = 19, cex = 0.5)
 plot(coastlines, add = TRUE)
 dev.off()
-
-
-#pdf
 
 ###### interpolate case data
 #assign the cases to store in  the marks of the dataset
