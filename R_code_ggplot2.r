@@ -6,16 +6,29 @@
 > oxidative <- c (1200,1300,21000,34000,50000)
 > oxidative
 [1]  1200  1300 21000 34000 50000
-> d<- data.frame(biofuels,oxidative)
-> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point()
-> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point(size=5, col= "red")
-> ggplot(d,aes(x=biofuels,y=oxidative))+geom_line()
-> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point(size=5, col= "red")+geom_line()
-> ggplot(d,aes(x=biofuels,y=oxidative))+geom_polygon()
-> save.image("C:\\lab\\.RData")
 
-#import data
-#> setwd("C:/lab/")
+#DATAFRAME ASSIGN TO NAME
+d<- data.frame(biofuels,oxidative)
+
+#make coordinates and points
+ggplot(d,aes(x=biofuels,y=oxidative))+geom_point()
+
+#color the points...color name in double quotes
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point(size=5, col= "red")
+
+#line representation
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_line()
+
+#points and lines
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_point(size=5, col= "red")+geom_line()
+
+#how about a polygon
+> ggplot(d,aes(x=biofuels,y=oxidative))+geom_polygon()
+
+#IMPORT DATA
+#IMPORT DATA FROM AN EXTERNAL SOURCE
+#always first set the working directory...brackets quotes C: /lab/ close quotes brackets
+> setwd("C:/lab/")
 
 > covid <- read.table("covid_agg.csv", header=TRUE)
 > covid
@@ -59,8 +72,11 @@
 > ggplot(covid, aes(x = lon, y = lat)) + geom_point()
 #estetics(coordinates and addional,x in general longitude,y will be latitude
 #there is a function names,gives you the names of the variables(of the given dataset)
+ names(covid)
+[1] "cat"     "country" "cases"   "lat"     "lon"   
 #with geom_point we can see the points
 #we can change the size of the points in estetics,so for expl, name of variable and column is cases 
 
+#we can change the SIZE of the data!
 ggplot(covid, aes(x = lon, y = lat, size = cases)) + geom_point()
-#we can see the graph now with bigger size points(of the cases)
+
